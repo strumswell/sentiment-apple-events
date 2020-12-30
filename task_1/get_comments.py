@@ -2,7 +2,6 @@
 import praw
 import pandas as pd
 import config
-import time
 
 #  %% Connect with Reddit
 reddit = praw.Reddit(
@@ -42,7 +41,7 @@ event_links = {
     "2018_Sept": "https://www.reddit.com/r/apple/comments/9f9b31/apples_gather_round_event_megathread/",
     "2018_Sept_Pre": "https://www.reddit.com/r/apple/comments/9f4ge7/apples_gather_round_preevent_megathread/",
     "2018_Jun_Post": "https://www.reddit.com/r/apple/comments/8ok1pj/wwdc_2018_postevent_megathread/",
-    "2018_Jun_": "https://www.reddit.com/r/apple/comments/8ohxfy/wwdc_2018_event_megathread/",
+    "2018_Jun": "https://www.reddit.com/r/apple/comments/8ohxfy/wwdc_2018_event_megathread/",
     "2018_Jun_Pre": "https://www.reddit.com/r/apple/comments/8oeiq0/wwdc_2018_preevent_megathread/",
     "2018_Mar": "https://www.reddit.com/r/apple/comments/87ioa4/apples_lets_take_a_field_trip_event_megathread/",
 }

@@ -1,1 +1,7 @@
 config.py
+get_data_stats.py
+basic_text_mining.py
+basic_text_mining2.py
+doc_cluster.pkl
+.vscode
+__pycache__

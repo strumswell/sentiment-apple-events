@@ -11,7 +11,7 @@ for event in events:
 
 comments_per_event = dict(zip(events, [[str(comment) for comment in df['Body'].values] for df in dfs]))
 
-# %% Helper Functions
+# %% Function for WordCloud
 def generate_wordcloud(comments, filter_words, allow_collocations, filename):
     all_comments_filtered = ' '.join([word for word in comments.split() if word not in filter_words])
     # Create a WordCloud object

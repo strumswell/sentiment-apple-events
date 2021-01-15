@@ -14,7 +14,7 @@ from nltk.stem import WordNetLemmatizer
 # https://www.geeksforgeeks.org/text-preprocessing-in-python-set-1/?ref=lbp
 p = inflect.engine()
 stemmer = SnowballStemmer('english')
-lemmer=WordNetLemmatizer()
+#lemmer=WordNetLemmatizer()
 
 def convert_number(text): 
     # split string into list of words 
@@ -114,6 +114,12 @@ for pos, df in enumerate(dfs):
 test = dfs[0]
 print(dfs[0]['Body'][448])
 
+
+
+
+
+################################### OLD IDEAS ###################################
+
 # %% 
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
@@ -138,22 +144,6 @@ for pos, doc in enumerate(documents):
     plt.scatter(data2D[:,0], data2D[:,1], c=km.labels_)
     #plt.show()
     plt.savefig('images/kmeans/' + events[pos] + ".pdf")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #plt.savefig('images/kmeans/' + events[pos] + ".png")
 

@@ -22,7 +22,6 @@ for event in events:
 comments_per_event = [[str(comment) for comment in df['Body'].values] for df in dfs]
 
 # %% Most Common Words for every Event
-# Helper function
 def plot_25_most_common_words(count_data, count_vectorizer, event_name):
     import matplotlib.pyplot as plt
     words = count_vectorizer.get_feature_names()
@@ -58,7 +57,7 @@ for pos, event_comments in enumerate(comments_per_event):
     # Visualise the 25 most common words
     #plot_25_most_common_words(count_data, count_vectorizer, events[pos])
 
-# %%
+# %% Do LDA Topic Modeling
 import warnings
 warnings.simplefilter("ignore", DeprecationWarning)
 # Load the LDA model from sk-learn

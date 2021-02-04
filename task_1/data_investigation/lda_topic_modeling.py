@@ -43,7 +43,7 @@ print("Topics found via LDA:")
 print_topics(lda, comments_per_event['2020_Nov_Post'], number_words)
 
 lda.score(doc_term_matrix)
-# %% Search optimal number of topics
+# %% Idea 1: Search optimal number of topics via GridSearch
 # https://www.machinelearningplus.com/nlp/topic-modeling-python-sklearn-examples/
 
 search_params = {'n_components': [1, 2, 3, 4], 'learning_decay': [0.3, 0.4, 0.5]}
@@ -59,15 +59,56 @@ best_lda_model = model.best_estimator_
 print("Best Model's Params: ", model.best_params_)
 print("Best Log Likelihood Score: ", model.best_score_)
 print("Model Perplexity: ", best_lda_model.perplexity(doc_term_matrix))
-# %%
+# %% Idea 2: Optimal number of topics via coherence score
 import gensim.corpora as corpora
-# Create Dictionary
-l = [comment.split() for comment in comments_per_event['2020_Nov_Post'] if len(comment.split()) > 0]
-id2word = corpora.Dictionary(l)
-# Create Corpus
-texts = l
-# Term Document Frequency
-corpus = [id2word.doc2bow(text) for text in texts]
-# View
-print(corpus[:1])
+import gensim
+import matplotlib.pyplot as plt 
+
+lda_events = ["2020_Nov_Pre", "2019_Mar_Pre", "2018_Sept_Pre", "2020_Nov", "2019_Sept", "2018_Oct"]
+lda_data = []
+
+for event in lda_events:
+    print("Doing " + event)
+    comments = [comment.split() for comment in comments_per_event[event] if len(comment.split()) > 0]
+    id2word = corpora.Dictionary(comments)
+    corpus = [id2word.doc2bow(comment) for comment in comments]
+
+    # Find best topics
+    topics = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+    scores = []
+    models = []
+
+    for topic in topics:
+        chunksize = 500 
+        passes = 20 
+        iterations = 400
+        eval_every = 1  
+
+        lda_model = gensim.models.LdaModel(corpus=corpus, id2word=id2word, chunksize=chunksize, \
+                            alpha='auto', eta='auto', \
+                            iterations=iterations, num_topics=topic, \
+                            passes=passes, eval_every=eval_every)
+        models.append(lda_model)
+
+        coherence_model_lda = gensim.models.CoherenceModel(model=lda_model, texts=comments, dictionary=id2word, coherence='u_mass')
+        coherence_lda = coherence_model_lda.get_coherence()
+        scores.append(coherence_lda)
+        # Print the Keyword in the 5 topics
+        #print(lda_model.print_topics())
+        print("  \___ " + str(topic) + ": " + str(coherence_lda))
+
+    fig, ax = plt.subplots()
+    ax.plot(topics, scores)
+    ax.set(xlabel='Topcis', ylabel='Coherence Score (u_mass)', title='Optimal Number of Topics for ' + event)
+    ax.grid()
+    plt.show()
+    fig.savefig("../images/topic_modeling/coherence_"+event+".pdf")
+
+    lda_data.append([models[scores.index(min(scores))], corpus, id2word])
+
+# %%
+import pyLDAvis.gensim
+
+lda_visualization = pyLDAvis.gensim.prepare(lda_data[5][0], lda_data[5][1], lda_data[5][2], sort_topics=True, mds="tsne")
+pyLDAvis.display(lda_visualization)
 # %%

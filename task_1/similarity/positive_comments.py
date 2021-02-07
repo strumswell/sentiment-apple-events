@@ -26,22 +26,20 @@ for df in dfs:
 #comments_per_event = dict(zip(events, [[str(comment) for comment in df['Body'].values ] for df in dfs]))
 
 # %% array to string 
-str_comments_per_event = {}
-i = 0
+combined_comments_per_event = {}
+
+for event in comments_per_event:
+    comments_per_event[event] = [str(comment) for comment in comments_per_event[event]]
+
+# %% 
+combined_comments_per_event = {}
 for element in comments_per_event:
-    x = 0
-    print(element)
-    print(x)
-    while x < len(comments_per_event[event]):
-        if comments_per_event[event][x] != comments_per_event[event][x] :
-            comments_per_event[event][x] = 'appl'
-            print(comments_per_event[event][x])
-        x += 1
-        print(x)
-    str_comments_per_event.update(dict(zip([element], [' '.join(comments_per_event[element])])))
+    combined_comments_per_event.update(dict(zip([element], [' '.join(comments_per_event[element])])))
 
-#    str_comments_per_event[element] = [str_comments_per_event[element]]
-
+#    combined_comments_per_event[element] = [combined_comments_per_event[element]]
+# %%
+# comments_per_event['2020Nov'][29] = 'appl'
+print(type(comments_per_event['2020Nov'][26]))
 # %%  Filter comments
 # filter_words = ['nan', 'appl']
 # comments_event = comments_per_event['2020Oct']
@@ -53,8 +51,8 @@ string = []
 count = 0
 filter_words = ['nan', 'appl']
 
-for event in str_comments_per_event:
-    cleaned_comments = ' '.join([word for word in str_comments_per_event[event][x].split() if word not in filter_words ])
+for event in combined_comments_per_event:
+    cleaned_comments = ' '.join([word for word in combined_comments_per_event[event][x].split() if word not in filter_words ])
     string.append(cleaned_comments)
 
 
@@ -107,7 +105,7 @@ ax.set_title('Text Clustering of Events (Aggregated)')
 ax.legend()
 plt.xlabel("PCA 0")
 plt.ylabel("PCA 1")
-for pos, event in enumerate(str_comments_per_event.keys()):
+for pos, event in enumerate(combined_comments_per_event.keys()):
     plt.annotate(event, (scatter_x[pos], scatter_y[pos]))
 plt.show()
 

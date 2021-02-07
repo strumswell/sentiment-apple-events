@@ -27,12 +27,19 @@ for df in dfs:
 
 # %% array to string 
 str_comments_per_event = {}
+i = 0
 for element in comments_per_event:
     x = 0
+    print(element)
+    print(x)
     while x < len(comments_per_event[event]):
         if comments_per_event[event][x] != comments_per_event[event][x] :
-            comments_per_event[event][x] = ' '
+            comments_per_event[event][x] = 'appl'
+            print(comments_per_event[event][x])
+        x += 1
+        print(x)
     str_comments_per_event.update(dict(zip([element], [' '.join(comments_per_event[element])])))
+
 #    str_comments_per_event[element] = [str_comments_per_event[element]]
 
 # %%  Filter comments

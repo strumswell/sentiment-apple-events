@@ -18,7 +18,7 @@ for df in dfs:
     comment_array = []
     #print(list(score for score in df['Score'] if score > 5))
     # print(df.index[df['Score'] >= 5])
-    score_ind = df.index[df['Score'] >= 5]
+    score_ind = df.index[df['Score'] < 0]
     for ind in score_ind:
         comment_array.append(df['Body'][ind])
         comments_per_event.update(dict({events[count_df -1] : comment_array}))
@@ -37,9 +37,7 @@ for element in comments_per_event:
     combined_comments_per_event.update(dict(zip([element], [' '.join(comments_per_event[element])])))
 
 #    combined_comments_per_event[element] = [combined_comments_per_event[element]]
-# %%
-# comments_per_event['2020Nov'][29] = 'appl'
-print(type(comments_per_event['2020Nov'][26]))
+
 # %%  Filter comments
 # filter_words = ['nan', 'appl']
 # comments_event = comments_per_event['2020Oct']
@@ -52,7 +50,7 @@ count = 0
 filter_words = ['nan', 'appl']
 
 for event in combined_comments_per_event:
-    cleaned_comments = ' '.join([word for word in combined_comments_per_event[event][x].split() if word not in filter_words ])
+    cleaned_comments = ' '.join([word for word in combined_comments_per_event[event].split() if word not in filter_words ])
     string.append(cleaned_comments)
 
 

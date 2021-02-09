@@ -55,6 +55,10 @@ for event in comments_per_event:
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt_positive = list(reversed(plt_positive))
+plt_negative = list(reversed(plt_negative))
+plt_labels = list(reversed(plt_labels))
+
 x = np.arange(len(plt_labels))  # the label locations
 width = 0.35  # the width of the bars
 
@@ -65,7 +69,7 @@ rects2 = ax.bar(x + width/2, plt_negative, width, label='Negative', color='r')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel('Scores in %')
-ax.set_title('Scores by event and sentiment')
+ax.set_title('Scores by Event and Sentiment')
 ax.set_xticks(x)
 ax.set_xticklabels(plt_labels)
 ax.legend()
